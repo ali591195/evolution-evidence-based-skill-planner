@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Evolution · Begin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="top-controls">
+    <button
+      id="skip-button"
+      class="skip-button"
+      type="button"
+    >
+      Skip to form
+    </button>
+
+    <button
+      id="theme-toggle"
+      class="theme-toggle"
+      type="button"
+      aria-label="Switch to dark mode"
+      aria-pressed="false"
+    >
+      <span class="theme-icon" aria-hidden="true">☼</span>
+      <span id="theme-label">Light</span>
+    </button>
+  </div>
+
+  <main>
+    <section class="story" aria-label="A welcome before your journey begins">
+      <div class="story-marker">
+        <span>Chapter III</span>
+        <span class="story-marker-line"></span>
+      </div>
+
+      <section class="story-scene scene--opening" data-scene="0">
+        <div class="story-ink">
+          <p class="story-kicker">A page before the map</p>
+          <p class="story-title">Hello, dear <span id="adventurer-name">adventurer</span>.</p>
+        </div>
+      </section>
+
+      <section class="story-scene scene--right" data-scene="1">
+        <div class="story-ink">
+          <p>
+            Come in. Rest your boots for a little while.
+            There is no test here, and there is no wrong way to begin.
+          </p>
+        </div>
+      </section>
+
+      <section class="story-scene scene--left" data-scene="2">
+        <div class="story-ink">
+          <p>
+            How has life been treating you, lately?
+            What has kept you company, and what has been quietly
+            tugging at your thoughts?
+          </p>
+        </div>
+      </section>
+
+      <section class="story-scene scene--lower-right" data-scene="3">
+        <div class="story-ink">
+          <p>
+            Think back for a moment.
+            What little victories have you collected along the way?
+            What difficult adventures did you somehow make it through?
+          </p>
+        </div>
+      </section>
+
+      <section class="story-scene scene--upper-left" data-scene="4">
+        <div class="story-ink">
+          <p>
+            Every journey begins with a person, not a plan.
+            You do not need to have everything figured out.
+            You only need to know where your feet are standing now.
+          </p>
+        </div>
+      </section>
+
+      <section class="story-scene scene--center" data-scene="5">
+        <div class="story-ink">
+          <p class="story-final">
+            Tell us where you are going, where you begin,
+            and how much time you have.
+          </p>
+        </div>
+      </section>
+    </section>
+
+    <section class="planner-section" id="planner-section">
+      <div class="planner">
+        <header class="planner-header">
+          <p class="fig">The first page</p>
+          <h1>Begin your journey</h1>
+          <p class="subtitle">
+            Nothing needs to be perfect. Tell us what you know,
+            what you hope for, and where you would like the road to lead.
+          </p>
+        </header>
+
+        <form id="plan-form">
+          <label for="goal">What would you like to grow toward?</label>
+          <textarea
+            id="goal"
+            name="goal"
+            rows="4"
+            required
+            placeholder="For example: Become confident at speaking English."
+          ></textarea>
+
+          <label for="level">Where do you feel you are starting from?</label>
+          <textarea
+            id="level"
+            name="level"
+            rows="4"
+            required
+            placeholder="For example: I can understand most conversations, but I still hesitate when I speak."
+          ></textarea>
+
+          <label for="timeframe">How much time would you like to give this journey?</label>
+          <input
+            id="timeframe"
+            name="timeframe"
+            type="text"
+            required
+            placeholder="For example: About 6 months"
+          >
+
+          <p id="message" class="message" role="alert"></p>
+
+          <button type="submit">
+            Turn the page
+          </button>
+        </form>
+
+        <section id="status" class="planner-status" hidden aria-live="polite">
+          <span class="stamp">Researching</span>
+          <p id="status-text">Searching papers...</p>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <script src="/plan.js"></script>
+  <script src="/embers.js" defer></script>
+</body>
+</html>
