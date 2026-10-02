@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Evolution · Log in</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main class="card">
+    <p class="fig">Chapter I</p>
+    <h1>Evolution</h1>
+    <p class="subtitle">Open the book and begin.</p>
+
+    <form id="login-form" data-mode="login">
+      <label for="email">Email</label>
+      <input id="email" type="email" required autocomplete="email">
+
+      <label for="password">Password</label>
+      <input id="password" type="password" required autocomplete="current-password">
+
+      <p id="message" class="message" role="alert"></p>
+      <button type="submit">Log in</button>
+    </form>
+
+    <p class="switch">No account yet? <a href="/register.html">Register</a></p>
+    <p class="hint">Reviewer login: dummy@example.com / dummy123</p>
+  </main>
+  <script src="/auth.js"></script>
+  <script src="/embers.js" defer></script>
+</body>
+</html>
