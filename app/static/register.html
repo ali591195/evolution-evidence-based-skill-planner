@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Evolution · Register</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main class="card">
+    <p class="fig">Chapter II</p>
+    <h1>Evolution</h1>
+    <p class="subtitle">Write your name on the first page.</p>
+
+    <form id="register-form" data-mode="register">
+      <label for="name">Name</label>
+      <input id="name" type="text" required autocomplete="name">
+
+      <label for="email">Email</label>
+      <input id="email" type="email" required autocomplete="email">
+
+      <label for="password">Password</label>
+      <input id="password" type="password" required minlength="8" autocomplete="new-password">
+      <p class="hint">At least 8 characters.</p>
+
+      <p id="message" class="message" role="alert"></p>
+      <button type="submit">Create account</button>
+    </form>
+
+    <p class="switch">Already have an account? <a href="/">Log in</a></p>
+  </main>
+  <script src="/auth.js"></script>
+  <script src="/embers.js" defer></script>
+</body>
+</html>
