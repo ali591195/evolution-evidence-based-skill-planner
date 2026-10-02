@@ -1,0 +1,312 @@
+/* ---------- Tokens ---------- */
+:root {
+  --paper: #f3e6c8;
+  --paper-edge: #d8c196;
+  --ink: #3a2a1c;
+  --ink-soft: #6b5640;
+  --rule: #c9ae7c;
+  --gold: #a8782a;
+  --link: #7a2230;
+  --btn-bg: #6e1f2c;
+  --btn-text: #f6ead0;
+  --stamp-green: #3d6b3f;
+  --error: #9c2f2f;
+  --glow: rgba(255, 244, 214, 0.65);
+  --shadow: rgba(58, 42, 28, 0.28);
+
+  --font-heading: "Cinzel", "Times New Roman", serif;
+  --font-body: "EB Garamond", Georgia, "Times New Roman", serif;
+  --font-label: "Cinzel", "Times New Roman", serif;
+
+  --candle: rgba(255, 238, 190, 0.85);
+  --candle-mid: rgba(255, 226, 160, 0.30);
+  --vignette: rgba(80, 48, 16, 0.38);
+
+  --grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.35  0 0 0 0 0.22  0 0 0 0 0.1  0 0 0 0.22 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #261c14;
+    --paper-edge: #130d09;
+    --ink: #ecdcb8;
+    --ink-soft: #b39d7a;
+    --rule: #4a3825;
+    --gold: #d4a24c;
+    --link: #e0a574;
+    --btn-bg: #c8923f;
+    --btn-text: #1d140d;
+    --stamp-green: #8cc08a;
+    --error: #ee9a8c;
+    --glow: rgba(212, 162, 76, 0.12);
+    --shadow: rgba(0, 0, 0, 0.55);
+
+    --candle: rgba(222, 150, 60, 0.20);
+    --candle-mid: rgba(222, 150, 60, 0.07);
+    --vignette: rgba(0, 0, 0, 0.55);
+
+    --grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.9  0 0 0 0 0.75  0 0 0 0 0.5  0 0 0 0.09 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+}
+
+/* ---------- Base ---------- */
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.2rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  background-color: var(--paper-edge);
+  background-image:
+    var(--grain),
+    radial-gradient(circle farthest-corner at 50% 50%, transparent 50%, var(--vignette) 100%);
+  background-attachment: fixed;
+}
+
+/* ---------- Candle glow ---------- */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(
+    circle 680px at 50% 50%,
+    var(--candle) 0%,
+    var(--candle-mid) 40%,
+    transparent 100%
+  );
+  animation: breathe 7s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0%, 100% { opacity: 0.8; }
+  50%      { opacity: 1; }
+}
+
+/* ---------- Embers canvas ---------- */
+.embers {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+h1, h2, h3 {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+h1 { font-size: 2.1rem; text-align: center; }
+
+h1::after {
+  content: "";
+  display: block;
+  width: 150px;
+  height: 12px;
+  margin: 14px auto 0;
+  background: var(--gold);
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 12'><path d='M0 6H62M88 6H150' stroke='black' stroke-width='1' fill='none'/><path d='M75 0.5L80.5 6L75 11.5L69.5 6Z' fill='black'/></svg>") center / contain no-repeat;
+          mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 12'><path d='M0 6H62M88 6H150' stroke='black' stroke-width='1' fill='none'/><path d='M75 0.5L80.5 6L75 11.5L69.5 6Z' fill='black'/></svg>") center / contain no-repeat;
+}
+
+a {
+  color: var(--link);
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+
+a:hover { text-decoration-thickness: 2px;}
+
+/* ---------- The page ---------- */
+.card {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  padding: 44px 40px 36px;
+  background:
+    var(--grain),
+    radial-gradient(ellipse at top, var(--glow) 0%, transparent 70%),
+    var(--paper);
+  border: 1px solid var(--gold);
+  border-radius: 6px;
+  box-shadow:
+    0 2px 0 var(--rule),
+    0 18px 40px var(--shadow);
+}
+
+.card::before {                /* inner gold frame */
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  pointer-events: none;
+}
+
+/* ---------- Labels ---------- */
+.fig {
+  margin: 0 0 14px;
+  text-align: center;
+  font-family: var(--font-label);
+  font-size: 0.78rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.subtitle {
+  margin: 4px 0 26px;
+  text-align: center;
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--ink-soft);
+}
+
+/* ---------- Form ---------- */
+label {
+  display: block;
+  margin: 20px 0 6px;
+  font-family: var(--font-label);
+  font-size: 0.74rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+input {
+  width: 100%;
+  padding: 10px 12px;
+  font-family: var(--font-body);
+  font-size: 1.15rem;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.28);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+@media (prefers-color-scheme: dark) {
+  input { background: rgba(0, 0, 0, 0.25); }
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px var(--glow), 0 0 0 1px var(--gold);
+}
+
+.hint {
+  margin: 6px 0 0;
+  font-size: 0.95rem;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+.message {
+  min-height: 1.4em;
+  margin: 10px 0 14px;
+  text-align: center;
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--error);
+}
+
+/* ---------- Button ---------- */
+button {
+  width: 100%;
+  padding: 13px;
+  font-family: var(--font-label);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--btn-text);
+  background: var(--btn-bg);
+  border: 1px solid var(--gold);
+  border-radius: 4px;
+  box-shadow: 0 3px 0 var(--rule), 0 6px 14px var(--shadow);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.35s ease;
+}
+
+button:hover { filter: brightness(1.12); transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.35s ease;}
+
+button:active {
+  transform: translateY(3px);
+  box-shadow: 0 0 0 var(--rule), 0 2px 6px var(--shadow);
+}
+
+button:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+button:disabled { opacity: 0.55; cursor: not-allowed; }
+
+/* ---------- Link under the form ---------- */
+.switch {
+  margin: 26px 0 0;
+  text-align: center;
+  font-size: 1.05rem;
+  color: var(--ink-soft);
+}
+
+.switch + .hint { text-align: center; margin-top: 10px; }
+
+/* ---------- Verified seal ---------- */
+.stamp {
+  display: inline-block;
+  padding: 3px 10px;
+  font-family: var(--font-label);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--stamp-green);
+  border: 1.5px solid var(--stamp-green);
+  border-radius: 3px;
+  transform: rotate(-3deg);
+}
+
+/* ---------- Autofill ---------- */
+input:-webkit-autofill {
+  -webkit-text-fill-color: var(--ink);
+  caret-color: var(--ink);
+  box-shadow: 0 0 0 1000px var(--paper) inset;
+}
+
+input:-webkit-autofill:focus {
+  box-shadow: 0 0 0 1000px var(--paper) inset, 0 0 0 1px var(--gold);
+}
+
+/* ---------- Card entrance ---------- */
+.card { animation: rise 0.7s ease-out both; }
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ---------- Small screens ---------- */
+@media (max-width: 480px) {
+  .card { padding: 34px 24px 28px; }
+  h1 { font-size: 1.75rem; }
+  body { font-size: 1.1rem; }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  button, input { transition: none; }
+  .card, body::before { animation: none; }
+}
