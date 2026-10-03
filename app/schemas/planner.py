@@ -85,3 +85,146 @@ class ClarificationProcessResult(BaseModel):
     defer_question: bool
     follow_up_question: str | None
     extraction: PlannerExtraction
+
+class PlanGenerationIn(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    extraction: PlannerExtraction
+
+
+class ResearchQuery(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    angle: str
+    purpose: str
+    query: str
+
+
+class ResearchQuerySet(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    queries: list[ResearchQuery]
+
+
+class PlanSource(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    source_id: str
+    angle: str
+    query: str
+    paper_id: str
+    title: str
+    year: int | None
+    authors: list[str]
+    url: str | None
+
+
+class PlanFeasibility(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    assessment: str
+    reasons: list[str]
+    constraints: list[str]
+    uncertainty: str
+
+
+class PlanRequirement(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    item: str
+    why_needed: str
+    source_ids: list[str]
+
+
+class PlanTask(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    title: str
+    source_ids: list[str]
+
+
+class PlanSection(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    title: str
+    purpose: str
+    tasks: list[PlanTask]
+
+
+class CurrentAction(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    title: str
+    description: str
+    completion_condition: str
+    source_ids: list[str]
+
+class GeneratedPlanContent(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    goal: str
+    goal_conditions: list[str]
+    starting_point: str
+    start_date: str
+    end_date: str
+
+    encouragement: str
+
+    feasibility: PlanFeasibility
+
+    requirements: list[PlanRequirement]
+
+    sections: list[PlanSection]
+
+    current_action: CurrentAction
+
+    @field_validator("start_date", "end_date")
+    @classmethod
+    def validate_date(cls, value: str) -> str:
+        try:
+            datetime.strptime(
+                value,
+                DATE_FORMAT,
+            )
+        except ValueError:
+            raise ValueError(
+                "Dates must use YYYY-MM-DD format"
+            )
+
+        return value
+
+class GeneratedPlan(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    goal: str
+    goal_conditions: list[str]
+    starting_point: str
+    start_date: str
+    end_date: str
+
+    encouragement: str
+
+    feasibility: PlanFeasibility
+
+    requirements: list[PlanRequirement]
+
+    sections: list[PlanSection]
+
+    current_action: CurrentAction
+
+    sources: list[PlanSource]
+
+    @field_validator("start_date", "end_date")
+    @classmethod
+    def validate_date(cls, value: str) -> str:
+        try:
+            datetime.strptime(
+                value,
+                DATE_FORMAT,
+            )
+        except ValueError:
+            raise ValueError(
+                "Dates must use YYYY-MM-DD format"
+            )
+
+        return value
