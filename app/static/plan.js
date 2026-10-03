@@ -14,7 +14,6 @@ const scenes = document.querySelectorAll(".story-scene");
 
 const TOKEN_KEY = "token";
 const USER_KEY = "evolution_user";
-const NEXT_PAGE = "/results.html";
 
 function readError(data) {
   if (!data || !data.detail) {
@@ -167,81 +166,6 @@ function skipToForm() {
   }, 600);
 }
 
-function setLoading(loading) {
-  button.disabled = loading;
-  status.hidden = !loading;
-}
-
-function wait(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-async function postPlan(body) {
-  const token = localStorage.getItem(TOKEN_KEY);
-
-  if (!token) {
-    window.location.href = "/";
-    return null;
-  }
-
-  const res = await fetch("/plan", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`,
-    },
-    body: JSON.stringify(body),
-  });
-
-  let data = null;
-
-  try {
-    data = await res.json();
-  } catch (_) {}
-
-  if (res.status === 401) {
-    localStorage.removeItem(TOKEN_KEY);
-    localStorage.removeItem(USER_KEY);
-    window.location.href = "/";
-    return null;
-  }
-
-  if (!res.ok) {
-    throw new Error(readError(data));
-  }
-
-  return data;
-}
-
-async function submitPlan(goal, level, timeframe) {
-  setLoading(true);
-  message.textContent = "";
-
-  statusText.textContent = "Searching for the right papers...";
-  await wait(350);
-
-  statusText.textContent = "Gathering the evidence...";
-  await wait(350);
-
-  statusText.textContent = "Building your path...";
-
-  const data = await postPlan({
-    goal,
-    current_level: level,
-    timeframe,
-  });
-
-  if (!data) return;
-
-  localStorage.setItem("plan_result", JSON.stringify(data));
-  window.location.href = NEXT_PAGE;
-}
-
-function showError(error) {
-  message.textContent = error.message;
-  setLoading(false);
-}
-
 form.addEventListener("submit", (event) => {
   event.preventDefault();
 
@@ -269,6 +193,7 @@ form.addEventListener("submit", (event) => {
 
   sessionStorage.removeItem("evolution_chat");
   sessionStorage.removeItem("planner_extraction");
+  sessionStorage.removeItem("plan_result");
 
   window.location.href = "/chat.html";
 });

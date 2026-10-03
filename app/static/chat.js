@@ -887,18 +887,8 @@ async function submitAnswer(event) {
 generatePlanButton.addEventListener(
   "click",
   () => {
-    /*
-     * The plan-generation route does not exist
-     * yet, so this button is intentionally only
-     * the completed frontend state for now.
-     *
-     * The next backend step can connect it to
-     * the actual plan-generation endpoint.
-     */
-    sessionStorage.setItem(
-      "plan_generation_requested",
-      "true"
-    );
+    window.location.href =
+      "/plan-results.html";
   }
 );
 
