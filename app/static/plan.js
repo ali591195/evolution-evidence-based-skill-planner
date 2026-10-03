@@ -242,23 +242,35 @@ function showError(error) {
   setLoading(false);
 }
 
-form.addEventListener("submit", async (event) => {
+form.addEventListener("submit", (event) => {
   event.preventDefault();
 
+  message.textContent = "";
+
   const goal = document.getElementById("goal").value.trim();
-  const level = document.getElementById("level").value.trim();
+  const currentLevel = document.getElementById("level").value.trim();
   const timeframe = document.getElementById("timeframe").value.trim();
 
-  if (!goal || !level || !timeframe) {
-    message.textContent = "Take your time and fill in all three fields.";
+  if (!goal || !currentLevel || !timeframe) {
+    message.textContent = "Please fill in all three fields before continuing.";
     return;
   }
 
-  try {
-    await submitPlan(goal, level, timeframe);
-  } catch (error) {
-    showError(error);
-  }
+  const plannerRequest = {
+    goal,
+    current_level: currentLevel,
+    timeframe,
+  };
+
+  sessionStorage.setItem(
+    "planner_request",
+    JSON.stringify(plannerRequest)
+  );
+
+  sessionStorage.removeItem("evolution_chat");
+  sessionStorage.removeItem("planner_extraction");
+
+  window.location.href = "/chat.html";
 });
 
 setupTheme();
