@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+
+  <title>Evolution · Conversation</title>
+
+  <script>
+    (() => {
+      const saved = localStorage.getItem("evolution_theme");
+
+      const theme =
+        saved === "light" || saved === "dark"
+          ? saved
+          : window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light";
+
+      document.documentElement.dataset.theme = theme;
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="/style.css">
+</head>
+
+<body class="chat-page">
+
+  <div class="chat-shell">
+
+    <header class="chat-header">
+
+      <div class="chat-header-left">
+        <p class="chat-chapter">Chapter IV</p>
+
+        <div class="chat-heading-line">
+          <span class="chat-heading-mark"></span>
+          <h1>Between the lines</h1>
+        </div>
+
+        <p class="chat-subtitle">
+          A few words before the map takes shape.
+        </p>
+      </div>
+
+      <div class="chat-header-right">
+        <span class="chat-status">
+          <span class="chat-status-dot"></span>
+          Listening
+        </span>
+
+        <button
+          id="chat-theme-toggle"
+          class="theme-toggle"
+          type="button"
+          aria-label="Switch to light mode"
+          aria-pressed="true"
+        >
+          <span class="theme-icon" aria-hidden="true">◐</span>
+          <span id="chat-theme-label">Dark</span>
+        </button>
+      </div>
+
+    </header>
+
+
+    <main class="conversation">
+
+      <div
+        id="chat-thread"
+        class="chat-thread"
+        aria-live="polite"
+        aria-label="Evolution conversation"
+      ></div>
+
+
+      <section
+        id="chat-composer"
+        class="chat-composer"
+        hidden
+      >
+        <form id="chat-answer-form">
+
+          <label for="chat-answer">
+            Your answer
+          </label>
+
+          <div class="chat-input-row">
+
+            <textarea
+              id="chat-answer"
+              name="answer"
+              rows="3"
+              required
+              autocomplete="off"
+              placeholder="Write your answer here..."
+            ></textarea>
+
+            <button
+              id="chat-send-button"
+              class="chat-send-button"
+              type="submit"
+              aria-label="Send answer"
+              title="Send answer"
+            >
+              <svg
+                class="quill-icon"
+                viewBox="0 0 64 64"
+                aria-hidden="true"
+              >
+                <path
+                  d="M52 8C37 9 24 16 16 28c-4 6-6 13-6 20"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                />
+
+                <path
+                  d="M49 10c-2 8-8 15-17 20-7 4-13 6-19 7"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                />
+
+                <path
+                  d="M12 52l6-15 10 10-16 5z"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linejoin="round"
+                />
+
+                <path
+                  d="M28 47L49 26"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                />
+              </svg>
+
+              <span>Send</span>
+            </button>
+
+          </div>
+
+          <p class="chat-input-hint">
+            There is no perfect answer. Just tell it as it is.
+          </p>
+
+        </form>
+      </section>
+
+
+      <section
+        id="plan-cta"
+        class="plan-cta"
+        hidden
+      >
+        <div class="plan-cta-mark">
+          ✦
+        </div>
+
+        <p class="plan-cta-kicker">
+          The map is ready
+        </p>
+
+        <p class="plan-cta-text">
+          We have enough to make your plan now.
+        </p>
+
+        <button
+          id="generate-plan-button"
+          class="generate-plan-button"
+          type="button"
+        >
+          Generate my plan
+        </button>
+      </section>
+
+    </main>
+
+
+    <footer class="chat-footer">
+
+      <div class="chat-footer-line"></div>
+
+      <p>
+        Your conversation is kept only for this browser session.
+      </p>
+
+    </footer>
+
+  </div>
+
+
+  <script src="/chat.js"></script>
+</body>
+</html>
