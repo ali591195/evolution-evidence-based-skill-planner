@@ -201,6 +201,14 @@ a:hover {
   text-decoration-thickness: 2px;
 }
 
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
 /* ---------- Auth page ---------- */
 
 .card {
