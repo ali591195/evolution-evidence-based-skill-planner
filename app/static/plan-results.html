@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <meta
+        name="color-scheme"
+        content="light dark"
+    >
+
+    <title>Evolution · Your Plan</title>
+
+    <script>
+        (() => {
+            const saved =
+                localStorage.getItem(
+                    "evolution_theme"
+                );
+
+            const theme =
+                saved === "light" ||
+                saved === "dark"
+                    ? saved
+                    : window.matchMedia(
+                        "(prefers-color-scheme: dark)"
+                    ).matches
+                        ? "dark"
+                        : "light";
+
+            document.documentElement.dataset.theme =
+                theme;
+        })();
+    </script>
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/style.css"
+    >
+</head>
+
+<body class="plan-results-page">
+    <div class="plan-results-shell">
+
+        <header class="chat-header">
+
+            <div class="chat-header-left">
+                <p class="chat-chapter">Chapter V</p>
+
+                <div class="chat-heading-line">
+                    <span class="chat-heading-mark"></span>
+
+                    <h1>The map takes shape</h1>
+                </div>
+
+                <p class="chat-subtitle">
+                    Your path, shaped around where you are now.
+                </p>
+            </div>
+
+            <div class="chat-header-right">
+
+                <span class="chat-status">
+                    <span class="chat-status-dot"></span>
+
+                    <span id="planStatus">
+                        Preparing your plan
+                    </span>
+                </span>
+
+                <button
+                    id="chat-theme-toggle"
+                    class="theme-toggle"
+                    type="button"
+                    aria-label="Switch to light mode"
+                    aria-pressed="true"
+                >
+                    <span
+                        class="theme-icon"
+                        aria-hidden="true"
+                    >
+                        ◐
+                    </span>
+
+                    <span id="chat-theme-label">
+                        Dark
+                    </span>
+                </button>
+
+            </div>
+
+        </header>
+
+        <main class="plan-results-main">
+
+            <!-- THINKING STATE -->
+
+            <section
+                class="plan-thinking"
+                id="thinkingState"
+            >
+                <div class="plan-thinking-symbol">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                <h1 id="thinkingTitle">
+                    Thinking...
+                </h1>
+
+                <p id="thinkingMessage">
+                    I'm putting together your plan.
+                </p>
+            </section>
+
+
+            <!-- ERROR STATE -->
+
+            <section
+                class="plan-error hidden"
+                id="errorState"
+            >
+                <div class="plan-error-card">
+                    <p class="plan-eyebrow">
+                        Something went wrong
+                    </p>
+
+                    <h1>
+                        I couldn't build your plan.
+                    </h1>
+
+                    <p id="errorMessage">
+                        Please try again.
+                    </p>
+
+                    <a
+                        href="/chat.html"
+                        class="plan-primary-button"
+                    >
+                        Return to clarification
+                    </a>
+                </div>
+            </section>
+
+
+            <!-- PLAN -->
+
+            <section
+                class="generated-plan hidden"
+                id="generatedPlan"
+            >
+
+                <header class="plan-intro">
+                    <p class="plan-eyebrow">
+                        Your Evolution Plan
+                    </p>
+
+                    <h1 id="planGoal"></h1>
+
+                    <p
+                        class="plan-encouragement"
+                        id="planEncouragement"
+                    ></p>
+
+                    <div class="plan-meta">
+                        <div>
+                            <span class="plan-meta-label">
+                                Starting point
+                            </span>
+
+                            <span
+                                class="plan-meta-value"
+                                id="planStartingPoint"
+                            ></span>
+                        </div>
+
+                        <div>
+                            <span class="plan-meta-label">
+                                Timeframe
+                            </span>
+
+                            <span
+                                class="plan-meta-value"
+                                id="planTimeframe"
+                            ></span>
+                        </div>
+                    </div>
+                </header>
+
+
+                <!-- FEASIBILITY -->
+
+                <section class="plan-card">
+                    <div class="plan-section-heading">
+                        <p class="plan-eyebrow">
+                            Before you begin
+                        </p>
+
+                        <h2>
+                            What you can work toward
+                        </h2>
+                    </div>
+
+                    <p
+                        class="plan-feasibility-assessment"
+                        id="feasibilityAssessment"
+                    ></p>
+
+                    <div class="plan-columns">
+
+                        <div>
+                            <h3>
+                                Why this is realistic
+                            </h3>
+
+                            <ul id="feasibilityReasons"></ul>
+                        </div>
+
+                        <div>
+                            <h3>
+                                Keep in mind
+                            </h3>
+
+                            <ul id="feasibilityConstraints"></ul>
+                        </div>
+
+                    </div>
+
+                    <div class="plan-uncertainty">
+                        <span>
+                            Evidence uncertainty
+                        </span>
+
+                        <p id="feasibilityUncertainty"></p>
+                    </div>
+                </section>
+
+
+                <!-- REQUIREMENTS -->
+
+                <section
+                    class="plan-card"
+                    id="requirementsSection"
+                >
+                    <div class="plan-section-heading">
+                        <p class="plan-eyebrow">
+                            What you'll need
+                        </p>
+
+                        <h2>
+                            Your requirements
+                        </h2>
+                    </div>
+
+                    <div
+                        class="plan-requirements"
+                        id="requirementsList"
+                    ></div>
+                </section>
+
+                <!-- SEQUENTIAL PLAN -->
+
+                <section class="plan-card">
+                    <div class="plan-section-heading">
+                        <p class="plan-eyebrow">
+                            Your roadmap
+                        </p>
+
+                        <h2>
+                            Work through these stages in order
+                        </h2>
+
+                        <p class="plan-roadmap-note">
+                            Complete each task before moving to the next one.
+                            Only move forward when you feel comfortable with
+                            what you have learned and genuinely believe you
+                            have mastered the previous task.
+                        </p>
+                    </div>
+
+                    <div
+                        class="plan-sections"
+                        id="planSections"
+                    ></div>
+                </section>
+
+
+                <!-- SOURCES -->
+
+                <section
+                    class="plan-card"
+                    id="sourcesSection"
+                >
+                    <div class="plan-section-heading">
+                        <p class="plan-eyebrow">
+                            Research behind your plan
+                        </p>
+
+                        <h2>
+                            Sources
+                        </h2>
+                    </div>
+
+                    <div
+                        class="plan-sources"
+                        id="planSources"
+                    ></div>
+                </section>
+
+                <!-- CURRENT ACTION -->
+
+                <section class="plan-current-action">
+
+                    <div class="plan-current-action-header">
+                        <div>
+                            <p class="plan-eyebrow">
+                                Start here
+                            </p>
+
+                            <h2>
+                                Your current action
+                            </h2>
+                        </div>
+
+                        <span class="plan-current-badge">
+                            DO THIS FIRST
+                        </span>
+                    </div>
+
+                    <h3 id="currentActionTitle"></h3>
+
+                    <p id="currentActionDescription"></p>
+
+                    <div class="plan-completion">
+                        <span>
+                            You're ready to move on when
+                        </span>
+
+                        <p id="currentActionCompletion"></p>
+                    </div>
+
+                </section>
+
+                <!-- FINAL ACTIONS -->
+
+                <section class="plan-finish">
+
+                    <div class="plan-save-reminder">
+                        <p class="plan-eyebrow">
+                            Keep this plan
+                        </p>
+
+                        <h2>
+                            Save it before you leave
+                        </h2>
+
+                        <p>
+                            Your plan is currently stored only for this
+                            session. Save or copy it somewhere you trust so
+                            you don't lose it when the session ends.
+                        </p>
+                    </div>
+
+                    <div class="plan-finish-actions">
+                        <button
+                            type="button"
+                            class="plan-primary-button"
+                            id="copyPlanButton"
+                        >
+                            Copy plan
+                        </button>
+                    </div>
+
+                    <p
+                        class="plan-copy-status"
+                        id="copyStatus"
+                        aria-live="polite"
+                    ></p>
+
+                    <div class="plan-progress-rule">
+                        <strong>
+                            One rule for moving forward
+                        </strong>
+
+                        <p>
+                            Only move to the next task after you have completed
+                            the current one, feel comfortable with it, and
+                            genuinely feel that you have mastered it.
+                        </p>
+                    </div>
+
+                    <button
+                        id="next-task-button"
+                        class="generate-plan-button"
+                        type="button"
+                    >
+                        Next task
+                    </button>
+
+                </section>
+
+            </section>
+
+        </main>
+    </div>
+
+    <script src="/plan-results.js"></script>
+</body>
+</html>

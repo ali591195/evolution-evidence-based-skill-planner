@@ -7,7 +7,8 @@ from app.schemas.auth import LoginIn, SignupIn
 from app.services import auth_service, planner_service
 from app.schemas.planner import (
     PlannerClarificationIn,
-    PlannerIn
+    PlannerIn,
+    PlanGenerationIn, GeneratedPlan
 )
 
 
@@ -66,4 +67,34 @@ def clarify(
         raise HTTPException(
             status_code=422,
             detail=str(exc),
+        )
+
+@router.post("/generate-plan")
+def generate_plan(
+    body: PlanGenerationIn,
+    user: dict = Depends(current_user),
+):
+    try:
+        return planner_service.generate_plan(
+            body
+        )
+    except ValueError as exc:
+        raise HTTPException(
+            status_code=422,
+            detail=str(exc),
+        )
+
+@router.post("/next-task")
+def next_task(
+    body: GeneratedPlan,
+    user: dict = Depends(current_user),
+):
+    try:
+        return planner_service.advance_current_action(
+            body
+        )
+    except ValueError as error:
+        raise HTTPException(
+            status_code=409,
+            detail=str(error),
         )
